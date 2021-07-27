@@ -7,9 +7,11 @@ import TaskInput from './components/TaskInput'
 
 export default function App() {
   const [taskList, setTaskList] = useState([]);
+  const [isAddVisible, setIsAddVisible] = useState(false);
 
   const addTaskHandler = (newTask) => {
     setTaskList(currentTasks => [...currentTasks, {id: Math.random().toString() , value: newTask}]);
+    setIsAddVisible(false);
   }
 
   const removeTaskHandler = (targetId) => { 
@@ -17,9 +19,17 @@ export default function App() {
                               return currentTasks.filter(task => task.id !== targetId )})
   }
 
+
+  const cancelAddTaskHandler = () => { setIsAddVisible(false) }
+
   return (
     <View style={styles.screen} >
-      <TaskInput addTaskHandler={addTaskHandler}/> 
+      <Button title="Add new task" onPress={() => setIsAddVisible(true)}/>
+      <TaskInput 
+          onAddTask={addTaskHandler}
+          visibility={isAddVisible}
+          onCancelAdd={cancelAddTaskHandler}
+      /> 
 
       <FlatList  
         data={taskList}  
@@ -35,7 +45,6 @@ export default function App() {
 const styles = StyleSheet.create({
   screen: {
     padding: 50,
-    backgroundColor: "hotpink"
   }
 });
  

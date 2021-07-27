@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { View, Text, StyleSheet, TextInput, Button} from 'react-native';
+import { View, Text, StyleSheet, TextInput, Button, Modal} from 'react-native';
 
 const TaskInput = props => {
     const [newTask, setNewTask] = useState('');  
@@ -8,33 +8,60 @@ const TaskInput = props => {
         setNewTask(enteredText);
     }
 
+    const addTaskHandler = () => {
+        props.onAddTask(newTask);
+        setNewTask('');
+    } 
+
     return(
-        <View style ={styles.inputContainer}>
-            <TextInput
-                placeholder="enter task.."
-                style={styles.input}
-                onChangeText={taskInputHandler}
-                value={newTask}
-            />
-            <Button
-                title="+"
-                onPress={props.addTaskHandler.bind(this, newTask)}
-            /> 
-        </View>
+        <Modal visible={props.visibility} animationType="slide">
+            <View style ={styles.inputContainer}>
+                <TextInput
+                    placeholder="enter task.."
+                    style={styles.input}
+                    onChangeText={taskInputHandler}
+                    value={newTask}
+                />
+                <View style={styles.buttonContainer}>
+                    <View style={styles.button}>
+                    <Button
+                        title="Add"
+                        onPress={addTaskHandler}
+                    /> 
+                    </View>
+                    <View style={styles.button}>
+                    <Button
+                        title='Cancel' 
+                        color='red'
+                        onPress={props.onCancelAdd}
+                    />
+                    </View>
+                </View>
+            </View>
+        </Modal>
     );
 }
 
 const styles = StyleSheet.create({ 
     inputContainer: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'center',
         alignItems: 'center'
-      },
+      },   
       input: {
         borderBottomColor: 'black',
         borderWidth: 1,
         padding: 10,
         width: '80%'
+      }, 
+      buttonContainer:{
+          flexDirection: 'row',
+          justifyContent: 'space-evenly',
+          width: '75%'
+      },
+      button:{
+          width: '40%'
       }
   })
 
