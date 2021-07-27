@@ -9,16 +9,25 @@ export default function App() {
   const [taskList, setTaskList] = useState([]);
 
   const addTaskHandler = (newTask) => {
-    setTaskList(currentTasks => [...currentTasks, {key: Math.random().toString() , value: newTask}]);
-  } 
+    setTaskList(currentTasks => [...currentTasks, {id: Math.random().toString() , value: newTask}]);
+  }
+
+  const removeTaskHandler = (targetId) => { 
+                    setTaskList(currentTasks => { 
+                              return currentTasks.filter(task => task.id !== targetId )})
+  }
 
   return (
     <View style={styles.screen} >
-      <TaskInput addTaskHandler={addTaskHandler}/>
+      <TaskInput addTaskHandler={addTaskHandler}/> 
 
-      <FlatList 
-        data={taskList} 
-        renderItem={itemData => <TaskItem value={itemData.item.value}/>}/>
+      <FlatList  
+        data={taskList}  
+        renderItem={itemData => <TaskItem 
+                                    id={itemData.item.id}
+                                    value={itemData.item.value} 
+                                    onDelete={removeTaskHandler} />
+                    } />
     </View>
   );
 }
@@ -26,6 +35,7 @@ export default function App() {
 const styles = StyleSheet.create({
   screen: {
     padding: 50,
+    backgroundColor: "hotpink"
   }
 });
  
