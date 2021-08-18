@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { View, Text, StyleSheet, TextInput, Button, Modal} from 'react-native';
+import { View, StyleSheet, TextInput, Button, Modal} from 'react-native';
 
 const TaskInput = props => {
     const [newTask, setNewTask] = useState('');  
@@ -14,7 +14,7 @@ const TaskInput = props => {
     } 
 
     return(
-        <Modal visible={props.visibility} animationType="slide">
+        <Modal visible={props.visibility} animationType="slide" >
             <View style ={styles.inputContainer}>
                 <TextInput
                     placeholder="enter task.."
@@ -47,7 +47,9 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'column',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        backgroundColor: 'hotpink',
+        fontFamily: ''
       },   
       input: {
         borderBottomColor: 'black',
